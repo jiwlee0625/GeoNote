@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "650975489488",
+    "firebase_url": "https://geonote-740db.firebaseio.com",
+    "project_id": "geonote-740db",
+    "storage_bucket": "geonote-740db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:650975489488:android:0eb7377f68196484",
+        "android_client_info": {
+          "package_name": "com.jiwlee0625.geonote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "650975489488-e8v0oqtc4tk7ueq1oo3eeithpi8ka861.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtPBlkVD_hGg1xFsdbDD3Z0ZlKvDwEBeo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
