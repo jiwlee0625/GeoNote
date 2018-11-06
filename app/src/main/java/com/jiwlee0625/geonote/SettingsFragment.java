@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -18,9 +19,6 @@ public class SettingsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public void logOut(View v) {
-        System.out.println("log out button clicked");
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
