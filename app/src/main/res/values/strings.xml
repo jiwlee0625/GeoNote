@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GeoNote</string>
+    <string name="title_notes">Notes</string>
+    <string name="title_maps">Maps</string>
+    <string name="title_settings">Settings</string>
+
+</resources>
