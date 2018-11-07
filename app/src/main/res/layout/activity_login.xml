@@ -32,7 +32,7 @@
         android:textSize="30dp"
         android:hint="password"/>
 
-    <!--<Button
+    <Button
         android:id="@+id/registerButton"
         app:layout_constraintTop_toBottomOf="@+id/authPass"
         app:layout_constraintRight_toLeftOf="@+id/loginButton"
@@ -41,7 +41,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="30dp"
         android:text="Register"
-        android:onClick="onClickRegisterBttn"/>-->
+        android:onClick="onClickRegisterBttn"/>
 
     <Button
         android:id="@+id/loginButton"
@@ -51,6 +51,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginRight="30dp"
-        android:text="Login / Register"
+        android:text="Login"
         android:onClick="onClickLogInBttn"/>
 </android.support.constraint.ConstraintLayout>

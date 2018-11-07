@@ -43,8 +43,7 @@ public class MainActivity extends AppCompatActivity {
     };
     public void onClickLogOutBttn(View v) {
         FirebaseAuth.getInstance().signOut();
-        Intent goToLogInIntent = new Intent(this, LoginActivity.class);
-        startActivity(goToLogInIntent);
+        goToLogin();
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +64,11 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser == null) {
-            Intent goToLogInIntent = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(goToLogInIntent);
+            goToLogin();
         }
+    }
+    public void goToLogin() {
+        Intent goToLogInIntent = new Intent(this, LoginActivity.class);
+        startActivity(goToLogInIntent);
     }
 }

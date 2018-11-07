@@ -19,7 +19,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-
+    private EditText emailView;
+    private EditText passView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,65 +33,94 @@ public class LoginActivity extends AppCompatActivity {
     public void onClickRegisterBttn(View v) {
         Toast.makeText(this, "Clicked on Register Bttn", Toast.LENGTH_LONG).show();
     }*/
-    public void logInAndRegister(String emailInput, String passInput) {
-        Toast.makeText(LoginActivity.this, "login and register called", Toast.LENGTH_LONG).show();
+    public void logIn(String emailInput, String passInput) {
         mAuth.signInWithEmailAndPassword(emailInput, passInput)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Intent goToMainIntent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(goToMainIntent);
+                            goToMain();
                         } else {
                             // If sign in fails, display a message to the user.
                             String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
-                            Toast.makeText(LoginActivity.this, "line 48" + errorCode, Toast.LENGTH_LONG).show();
                             switch (errorCode) {
-                                case "auth/invalid-email":
-                                    Toast.makeText(LoginActivity.this, "Invalid Email", Toast.LENGTH_LONG).show();
+                                case "ERROR_INVALID_EMAIL":
+                                    Toast.makeText(LoginActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
+                                    emailView.setText("");
+                                    passView.setText("");
                                     break;
-                                case "auth/user-disabled":
-                                    Toast.makeText(LoginActivity.this, "User disabled", Toast.LENGTH_LONG).show();
+                                case "ERROR_USER_DISABLED":
+                                    Toast.makeText(LoginActivity.this, "User disabled", Toast.LENGTH_SHORT).show();
+                                    emailView.setText("");
+                                    passView.setText("");
                                     break;
-                                case "auth/user-not-found":
-                                    Toast.makeText(LoginActivity.this, "User not found", Toast.LENGTH_LONG).show();
+                                case "ERROR_USER_NOT_FOUND":
                                     //Ask to register here
-                                    registerProcess();
+                                    Toast.makeText(LoginActivity.this, "User not found", Toast.LENGTH_SHORT).show();
+                                    emailView.setText("");
+                                    passView.setText("");
                                     break;
-                                case "auth/wrong-password":
-                                    Toast.makeText(LoginActivity.this, "Wrong password", Toast.LENGTH_LONG).show();
+                                case "ERROR_WRONG_PASSWORD":
+                                    Toast.makeText(LoginActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
+                                    passView.setText("");
                                     break;
                             }
                         }
                     }
                 });
     }
-    public void registerProcess() {
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int choice) {
-                switch (choice) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        //REGISTER
-                        break;
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        //NOT REGISTER
-                        break;
-                }
-            }
-        };
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-        builder.setMessage("The email you entered isn't registered. Want to register with entered email and password?")
-                .setPositiveButton("Yes", dialogClickListener)
-                .setNegativeButton("No", dialogClickListener).show();
+    public void register(String emailInput, String passInput) {
+        mAuth.createUserWithEmailAndPassword(emailInput, passInput)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Toast.makeText(LoginActivity.this, "Created user account, logging in now", Toast.LENGTH_SHORT).show();
+                            goToMain();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            FirebaseAuthException taskError = ((FirebaseAuthException) task.getException());
+                            String errorCode = taskError.getErrorCode();
+                            switch (errorCode) {
+                                case "ERROR_EMAIL_ALREADY_IN_USE":
+                                    Toast.makeText(LoginActivity.this, "Email already in use", Toast.LENGTH_SHORT).show();
+                                    emailView.setText("");
+                                    passView.setText("");
+                                    break;
+                                case "ERROR_INVALID_EMAIL":
+                                    Toast.makeText(LoginActivity.this, "Invalid Email", Toast.LENGTH_SHORT).show();
+                                    emailView.setText("");
+                                    passView.setText("");
+                                    break;
+                                case "ERROR_WEAK_PASSWORD":
+                                    Toast.makeText(LoginActivity.this, "Weak password", Toast.LENGTH_SHORT).show();
+                                    passView.setText("");
+                                    break;
+                                default:
+                                    Toast.makeText(LoginActivity.this, taskError.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
     }
     public void onClickLogInBttn(View v) {
-        EditText emailView = (EditText)findViewById(R.id.authEmail);
+        emailView = (EditText)findViewById(R.id.authEmail);
         String emailInput = emailView.getText().toString();
-        EditText passView = (EditText) findViewById(R.id.authPass);
+        passView = (EditText) findViewById(R.id.authPass);
         String passInput = passView.getText().toString();
-        logInAndRegister(emailInput, passInput);
+        logIn(emailInput, passInput);
+    }
+    public void onClickRegisterBttn(View v) {
+        emailView = (EditText)findViewById(R.id.authEmail);
+        String emailInput = emailView.getText().toString();
+        passView = (EditText) findViewById(R.id.authPass);
+        String passInput = passView.getText().toString();
+        register(emailInput, passInput);
+    }
+    public void goToMain() {
+        Intent goToMainIntent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(goToMainIntent);
     }
 }
