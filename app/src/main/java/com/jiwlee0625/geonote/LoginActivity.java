@@ -108,15 +108,31 @@ public class LoginActivity extends AppCompatActivity {
     public void onClickLogInBttn(View v) {
         emailView = (EditText)findViewById(R.id.authEmail);
         String emailInput = emailView.getText().toString();
+        if(emailInput.length() == 0) {
+            Toast.makeText(LoginActivity.this, "Please input email", Toast.LENGTH_SHORT).show();
+            return;
+        }
         passView = (EditText) findViewById(R.id.authPass);
         String passInput = passView.getText().toString();
+        if(passInput.length() == 0) {
+            Toast.makeText(LoginActivity.this, "Please input password", Toast.LENGTH_SHORT).show();
+            return;
+        }
         logIn(emailInput, passInput);
     }
     public void onClickRegisterBttn(View v) {
         emailView = (EditText)findViewById(R.id.authEmail);
         String emailInput = emailView.getText().toString();
+        if(emailInput.length() == 0) {
+            Toast.makeText(LoginActivity.this, "Please input email", Toast.LENGTH_SHORT).show();
+            return;
+        }
         passView = (EditText) findViewById(R.id.authPass);
         String passInput = passView.getText().toString();
+        if(passInput.length() == 0) {
+            Toast.makeText(LoginActivity.this, "Please input password", Toast.LENGTH_SHORT).show();
+            return;
+        }
         register(emailInput, passInput);
     }
     public void goToMain() {
