@@ -19,9 +19,10 @@ public class MainActivity extends AppCompatActivity {
 
     final Fragment fragment3 = new SettingsFragment();
     final Fragment fragment2 = new MapsFragment();
+    final Fragment fragment1 = new NotesFragment();
 
     final FragmentManager fm = getSupportFragmentManager();
-    Fragment active = fragment3;
+    Fragment active = fragment1;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -29,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
+                case R.id.navigation_notes:
+                    fm.beginTransaction().hide(active).show(fragment1).commit();
+                    active = fragment1;
+                    return true;
                 case R.id.navigation_maps:
                     fm.beginTransaction().hide(active).show(fragment2).commit();
                     active = fragment2;
@@ -54,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         fm.beginTransaction().add(R.id.fragmentContainer, fragment3, "3").hide(fragment3).commit();
-        fm.beginTransaction().add(R.id.fragmentContainer, fragment2, "2").commit();
+        fm.beginTransaction().add(R.id.fragmentContainer, fragment2, "2").hide(fragment2).commit();
+        fm.beginTransaction().add(R.id.fragmentContainer, fragment1, "1").commit();
+
 
         mAuth = FirebaseAuth.getInstance();
     }
