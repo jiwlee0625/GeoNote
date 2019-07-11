@@ -15,7 +15,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
 
     final Fragment fragment3 = new SettingsFragment();
     final Fragment fragment2 = new MapsFragment();
@@ -63,16 +62,11 @@ public class MainActivity extends AppCompatActivity {
         fm.beginTransaction().add(R.id.fragmentContainer, fragment1, "1").commit();
 
 
-        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser == null) {
-            goToLogin();
-        }
     }
     public void goToLogin() {
         Intent goToLogInIntent = new Intent(this, LoginActivity.class);
